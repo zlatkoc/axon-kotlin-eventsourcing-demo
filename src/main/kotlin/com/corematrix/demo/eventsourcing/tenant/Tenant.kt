@@ -17,7 +17,7 @@ open class Tenant {
     private var name: String? = null
     private var status: Status? = null
 
-    constructor() {}
+    constructor()
 
     @CommandHandler
     constructor(cmd: CreateTenantCommand): this() {
@@ -33,7 +33,7 @@ open class Tenant {
 
     @CommandHandler
     fun handle(cmd: ActivateTenantCommand) {
-        if (status == Status.ACTIVE) {
+        if (status == Status.SUSPENDED) {
             apply(TenantActivated(cmd.id))
         }
     }
