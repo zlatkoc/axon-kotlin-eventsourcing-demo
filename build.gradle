@@ -48,4 +48,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
+	compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.3.6'
+    testCompile group: 'org.axonframework', name: 'axon-test', version: '3.3.6'
 }
