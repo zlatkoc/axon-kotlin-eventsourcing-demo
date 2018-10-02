@@ -4,6 +4,7 @@ import com.corematrix.demo.eventsourcing.tenant.ActivateTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.CreateTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.SuspendTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.TenantId
+import com.corematrix.demo.eventsourcing.tenant.TenantStatus
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -25,9 +26,10 @@ fun main(args: Array<String>) {
     val commandGateway = ctx.getBean("commandGateway") as CommandGateway
     val tenantId = TenantId.new()
     val tenantName = "some tenant"
+    val tenantStatus = TenantStatus.ACTIVE
 
     commandGateway.sendAndWait<CreateTenantCommand>(
-        CreateTenantCommand(tenantId, tenantName))
+        CreateTenantCommand(tenantId, tenantName, tenantStatus))
     commandGateway.sendAndWait<SuspendTenantCommand>(
         SuspendTenantCommand(tenantId))
     commandGateway.sendAndWait<SuspendTenantCommand>(

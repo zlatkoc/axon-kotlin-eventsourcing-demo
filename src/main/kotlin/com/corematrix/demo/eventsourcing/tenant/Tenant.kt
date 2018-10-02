@@ -9,31 +9,27 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 open class Tenant {
 
-    enum class Status {
-        ACTIVE, SUSPENDED
-    }
-
     @AggregateIdentifier private var tenantId: TenantId? = null
     private var name: String? = null
-    private var status: Status? = null
+    private var status: TenantStatus? = null
 
     constructor()
 
     @CommandHandler
     constructor(cmd: CreateTenantCommand): this() {
-        apply(TenantCreated(cmd.id, cmd.name))
+        apply(TenantCreated(cmd.id, cmd.name, cmd.status))
     }
 
     @CommandHandler
     fun handle(cmd: SuspendTenantCommand) {
-        if (status == Status.ACTIVE) {
+        if (status == TenantStatus.ACTIVE) {
             apply(TenantSuspended(cmd.id))
         }
     }
 
     @CommandHandler
     fun handle(cmd: ActivateTenantCommand) {
-        if (status == Status.SUSPENDED) {
+        if (status == TenantStatus.SUSPENDED) {
             apply(TenantActivated(cmd.id))
         }
     }
@@ -42,16 +38,16 @@ open class Tenant {
     fun on(evt: TenantCreated) {
         tenantId = evt.id
         name = evt.name
-        status = Status.ACTIVE
+        status = evt.status
     }
 
     @EventHandler
     fun on(evt: TenantSuspended) {
-        status = Status.SUSPENDED
+        status = TenantStatus.SUSPENDED
     }
 
     @EventHandler
     fun on(evt: TenantActivated) {
-        status = Status.ACTIVE
+        status = TenantStatus.ACTIVE
     }
 }
