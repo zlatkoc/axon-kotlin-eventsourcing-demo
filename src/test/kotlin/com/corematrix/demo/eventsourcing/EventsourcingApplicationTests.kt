@@ -15,32 +15,32 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(classes = [EventsourcingApplication::class])
 class EventsourcingApplicationTests {
 
-	private var fixture : FixtureConfiguration<Tenant>? = null
+    private var fixture: FixtureConfiguration<Tenant>? = null
 
-	@Before
-	fun setup() {
-		fixture = AggregateTestFixture<Tenant>(Tenant::class.java)
-	}
+    @Before
+    fun setup() {
+        fixture = AggregateTestFixture(Tenant::class.java)
+    }
 
-	@Test
-	fun firstTest() {
-		val tenantId = TenantId.new()
-		val name = "some name"
+    @Test
+    fun firstTest() {
+        val tenantId = TenantId.new()
+        val name = "some name"
 
-		fixture!!.given()
-			.`when`(TenantCreated(tenantId, name))
-			.expectSuccessfulHandlerExecution()
-			.expectEvents(TenantCreated(tenantId, name))
-	}
+        fixture!!.givenNoPriorActivity()
+            .`when`(TenantCreated(tenantId, name))
+            .expectSuccessfulHandlerExecution()
+            .expectEvents(TenantCreated(tenantId, name))
+    }
 
     @Test
     fun secondTest() {
         val tenantId = TenantId.new()
         val name = "some name"
 
-        val fixture = AggregateTestFixture<Tenant>(Tenant::class.java)
+        val fixture = AggregateTestFixture(Tenant::class.java)
 
-        fixture.given()
+        fixture.givenNoPriorActivity()
             .`when`(TenantCreated(tenantId, name))
             .expectSuccessfulHandlerExecution()
             .expectEvents(TenantCreated(tenantId, name))

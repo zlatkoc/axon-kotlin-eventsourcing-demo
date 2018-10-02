@@ -1,5 +1,6 @@
 package com.corematrix.demo.eventsourcing
 
+import com.corematrix.demo.eventsourcing.tenant.ActivateTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.CreateTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.SuspendTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.TenantId
@@ -29,6 +30,13 @@ fun main(args: Array<String>) {
         CreateTenantCommand(tenantId, tenantName))
     commandGateway.sendAndWait<SuspendTenantCommand>(
         SuspendTenantCommand(tenantId))
+    commandGateway.sendAndWait<SuspendTenantCommand>(
+        SuspendTenantCommand(tenantId))
+    commandGateway.sendAndWait<ActivateTenantCommand>(
+        ActivateTenantCommand(tenantId))
 
-    // check stdout
+    // check stdout, expected something like:
+    // event received: TenantCreated(id=2020015930, name=some tenant)
+    // event received: TenantSuspended(id=2020015930)
+    // event received: TenantActivated(id=2020015930)
 }
