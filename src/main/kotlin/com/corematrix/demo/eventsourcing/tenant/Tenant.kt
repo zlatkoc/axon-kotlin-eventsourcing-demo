@@ -47,13 +47,11 @@ open class Tenant {
 
     @EventHandler
     fun on(evt: TenantSuspended) {
-        tenantId = evt.id
         status = Status.SUSPENDED
     }
 
     @EventHandler
     fun on(evt: TenantActivated) {
-        tenantId = evt.id
         status = Status.ACTIVE
     }
 }

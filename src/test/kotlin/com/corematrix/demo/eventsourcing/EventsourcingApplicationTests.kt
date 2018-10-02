@@ -1,5 +1,6 @@
 package com.corematrix.demo.eventsourcing
 
+import com.corematrix.demo.eventsourcing.tenant.CreateTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.Tenant
 import com.corematrix.demo.eventsourcing.tenant.TenantCreated
 import com.corematrix.demo.eventsourcing.tenant.TenantId
@@ -28,7 +29,7 @@ class EventsourcingApplicationTests {
         val name = "some name"
 
         fixture!!.givenNoPriorActivity()
-            .`when`(TenantCreated(tenantId, name))
+            .`when`(CreateTenantCommand(tenantId, name))
             .expectSuccessfulHandlerExecution()
             .expectEvents(TenantCreated(tenantId, name))
     }
@@ -41,7 +42,7 @@ class EventsourcingApplicationTests {
         val fixture = AggregateTestFixture(Tenant::class.java)
 
         fixture.givenNoPriorActivity()
-            .`when`(TenantCreated(tenantId, name))
+            .`when`(CreateTenantCommand(tenantId, name))
             .expectSuccessfulHandlerExecution()
             .expectEvents(TenantCreated(tenantId, name))
     }
