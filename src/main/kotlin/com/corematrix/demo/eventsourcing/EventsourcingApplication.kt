@@ -6,6 +6,7 @@ import com.corematrix.demo.eventsourcing.tenant.SuspendTenantCommand
 import com.corematrix.demo.eventsourcing.tenant.TenantId
 import com.corematrix.demo.eventsourcing.tenant.TenantStatus
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.eventsourcing.eventstore.EventStorageEngine
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
@@ -41,4 +42,12 @@ fun main(args: Array<String>) {
     // event received: TenantCreated(id=2020015930, name=some tenant)
     // event received: TenantSuspended(id=2020015930)
     // event received: TenantActivated(id=2020015930)
+
+    // list events for previously created tenant aggregate
+    val eventStore = ctx.getBean("eventStorageEngine") as EventStorageEngine
+    val events = eventStore.readEvents(tenantId.toString())
+
+    for (event in events) {
+        println(event)
+    }
 }
