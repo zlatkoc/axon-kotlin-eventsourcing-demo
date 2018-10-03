@@ -1,9 +1,6 @@
 package com.corematrix.demo.eventsourcing.api
 
-import com.corematrix.demo.eventsourcing.tenant.ActivateTenantCommand
-import com.corematrix.demo.eventsourcing.tenant.CreateTenantCommand
-import com.corematrix.demo.eventsourcing.tenant.SuspendTenantCommand
-import com.corematrix.demo.eventsourcing.tenant.TenantId
+import com.corematrix.demo.eventsourcing.tenant.*
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletableFuture
@@ -15,7 +12,7 @@ class TenantResource(private val gateway: CommandGateway) {
     @PostMapping
     fun createTenant(@RequestBody name: String): CompletableFuture<CreateTenantCommand> =
             gateway.send<CreateTenantCommand>(
-                    CreateTenantCommand(TenantId.new(), name))
+                    CreateTenantCommand(TenantId.new(), name, TenantStatus.ACTIVE))
 
     @GetMapping("{id}")
     fun getById(@PathVariable("id") id: String) {
@@ -32,5 +29,6 @@ class TenantResource(private val gateway: CommandGateway) {
     }
 
     @GetMapping
-    fun list() {}
+    fun list() {
+    }
 }
