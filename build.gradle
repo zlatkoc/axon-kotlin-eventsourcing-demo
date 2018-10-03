@@ -46,8 +46,10 @@ dependencies {
 	implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation('org.axonframework:axon-spring-boot-starter:3.3.6')
+	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
-	compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '3.3.6'
-    testCompile group: 'org.axonframework', name: 'axon-test', version: '3.3.6'
+	
+    testCompile('org.axonframework:axon-test:3.3.6')
 }
