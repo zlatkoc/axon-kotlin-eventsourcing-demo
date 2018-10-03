@@ -3,21 +3,24 @@ package com.corematrix.demo.eventsourcing.tenant
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle.apply
-import org.axonframework.eventhandling.EventHandler
+import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.spring.stereotype.Aggregate
-import org.springframework.context.annotation.Bean
+import org.springframework.util.Assert
 
 @Aggregate
-open class Tenant {
+class Tenant {
 
-    @AggregateIdentifier private var tenantId: TenantId? = null
+    @AggregateIdentifier
+    private var tenantId: TenantId? = null
     private var name: String? = null
     private var status: TenantStatus? = null
 
     constructor()
 
     @CommandHandler
-    constructor(cmd: CreateTenantCommand): this() {
+    constructor(cmd: CreateTenantCommand) : this() {
+        Assert.hasLength(cmd.name) { "Empty tenant name" }
+
         apply(TenantCreated(cmd.id, cmd.name, cmd.status))
     }
 
@@ -35,19 +38,19 @@ open class Tenant {
         }
     }
 
-    @EventHandler
+    @EventSourcingHandler
     fun on(evt: TenantCreated) {
         tenantId = evt.id
         name = evt.name
         status = evt.status
     }
 
-    @EventHandler
+    @EventSourcingHandler
     fun on(evt: TenantSuspended) {
         status = TenantStatus.SUSPENDED
     }
 
-    @EventHandler
+    @EventSourcingHandler
     fun on(evt: TenantActivated) {
         status = TenantStatus.ACTIVE
     }
