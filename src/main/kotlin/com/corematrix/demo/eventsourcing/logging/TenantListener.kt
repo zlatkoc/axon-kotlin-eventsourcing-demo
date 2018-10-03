@@ -7,20 +7,20 @@ import org.axonframework.eventhandling.EventHandler
 import org.springframework.stereotype.Component
 
 @Component
-open class Logger {
+class Logger {
 
     @EventHandler
-    fun handle(cmd: TenantCreated) {
-        println("event received: " + cmd.toString())
+    fun handle(e: TenantCreated) {
+        println("event received: $e")
     }
 
     @EventHandler
-    fun handle(cmd: TenantSuspended) {
-        println("event received: " + cmd.toString())
+    fun handle(e: TenantSuspended) {
+        println("event received: $e")
     }
 
     @EventHandler
-    fun handle(cmd: TenantActivated) {
-        println("event received: " + cmd.toString())
+    fun handle(e: TenantActivated) {
+        println("event received: $e")
     }
 }

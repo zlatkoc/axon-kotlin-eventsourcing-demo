@@ -27,17 +27,17 @@ fun main(args: Array<String>) {
 
     val commandGateway = ctx.getBean("commandGateway") as CommandGateway
     val tenantId = TenantId.new()
-    val tenantName = "some tenant"
+    val tenantName = "CMX"
     val tenantStatus = TenantStatus.ACTIVE
 
     commandGateway.sendAndWait<CreateTenantCommand>(
-        CreateTenantCommand(tenantId, tenantName, tenantStatus))
+            CreateTenantCommand(tenantId, tenantName, tenantStatus))
     commandGateway.sendAndWait<SuspendTenantCommand>(
-        SuspendTenantCommand(tenantId))
+            SuspendTenantCommand(tenantId))
     commandGateway.sendAndWait<SuspendTenantCommand>(
-        SuspendTenantCommand(tenantId))
+            SuspendTenantCommand(tenantId))
     commandGateway.sendAndWait<ActivateTenantCommand>(
-        ActivateTenantCommand(tenantId))
+            ActivateTenantCommand(tenantId))
 
     // check stdout, expected something like:
     // event received: TenantCreated(id=2020015930, name=some tenant)
@@ -48,7 +48,5 @@ fun main(args: Array<String>) {
     val eventStore = ctx.getBean("eventStorageEngine") as EventStorageEngine
     val events = eventStore.readEvents(tenantId.toString())
 
-    for (event in events) {
-        println(event)
-    }
+    events.forEach { println(it) }
 }
