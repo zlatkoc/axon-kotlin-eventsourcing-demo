@@ -17,6 +17,9 @@ https://blog.novatec-gmbh.de/event-sourcing-spring-boot-axon/
 
 https://blog.novatec-gmbh.de/testing-event-sourcing-applications/
 
+https://www.foundery.co.za/blog/a-pragmatic-design-for-an-axon-system/
+
+https://github.com/nieldw/ContactsAxonDemo
 
 #### GitHub code referencing AggregateTestFixture
 https://github.com/search?l=Kotlin&q=AggregateTestFixture&type=Code
