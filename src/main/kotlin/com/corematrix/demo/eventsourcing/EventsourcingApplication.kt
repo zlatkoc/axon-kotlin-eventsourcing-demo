@@ -25,6 +25,7 @@ fun main(args: Array<String>) {
 
     // test case
 
+    /*
     val commandGateway = ctx.getBean("commandGateway") as CommandGateway
     val tenantId = TenantId.new()
     val tenantName = "CMX"
@@ -49,4 +50,5 @@ fun main(args: Array<String>) {
     val events = eventStore.readEvents(tenantId.toString())
 
     events.forEach { println(it) }
+    */
 }

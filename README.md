@@ -41,6 +41,25 @@ https://github.com/axon-microservices/user
 https://github.com/DarkToast/AxonSpring
 
 
+#### RabbitMQ quick quickstart
+Install rabbitmq by using a package manager for your system:
+```bash
+$ sudo apt install rabbitmq-server
+```
+Configure rabbitmq - add web admin gui + user to connect:
+```bash
+# add web admin gui plugin
+$ sudo rabbitmq-plugins enable rabbitmq-management
+
+# configure the administrator so you can connect to web console
+$ sudo rabbitmqctl add_user user user
+$ sudo rabbitmqctl set_permissions -p user ".*" ".*" ".*"
+$ sudo rabbitmqctl set_permissions -p / user ".*" ".*" ".*"
+$ sudo rabbitmqctl set_user_tags user administrator
+```
+
+then you can connect to http://localhost:15672
+
 #### Demo TODO
 
 The usual Spring run works:
@@ -55,10 +74,12 @@ event received: TenantSuspended(id=602224704)
 event received: TenantActivated(id=602224704)
 ```
 
-1. Make tests work. Currently they fail with "org.axonframework.commandhandling.NoHandlerForCommandException". Tests use AggregateTestFixture.
-2. Implement at least one tenant projection
-3. Implement API controller for tenants
-4. Implement another aggregate root (UserProfile)
-5. Implement saga (coordinate creation of a tenant and 2 users). Expose saga start and progress on the API.
-6. Implement custom aggregate root repository for another aggregate (no event sourcing)
-7. Connect everything with postgres and activeMQ
+1. `DONE` Make tests work. Currently they fail with `org.axonframework.commandhandling.NoHandlerForCommandException`. Tests use AggregateTestFixture.
+1. Implement at least one tenant projection
+1. `DONE` Implement API controller for tenants
+1. Implement another aggregate root (UserProfile)
+1. Implement saga (coordinate creation of a tenant and 2 users). Expose saga start and progress on the API.
+1. Implement custom aggregate root repository for another aggregate (no event sourcing)
+1. Connect everything
+    1. postgres
+    1. `DONE` ActiveMQ
