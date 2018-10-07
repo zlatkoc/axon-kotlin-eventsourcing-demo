@@ -4,16 +4,21 @@ import com.corematrix.demo.eventsourcing.tenant.TenantCreated
 import com.rabbitmq.client.Channel
 import org.axonframework.amqp.eventhandling.DefaultAMQPMessageConverter
 import org.axonframework.amqp.eventhandling.spring.SpringAMQPMessageSource
+import org.axonframework.eventhandling.EventBus
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.eventhandling.scheduling.EventScheduler
+import org.axonframework.eventhandling.scheduling.java.SimpleEventScheduler
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
 import org.axonframework.serialization.Serializer
+import org.axonframework.spring.config.EnableAxon
 import org.springframework.amqp.core.*
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Component
+import java.util.concurrent.ScheduledExecutorService
 
 @Configuration
 class Configuration {
@@ -22,6 +27,7 @@ class Configuration {
         return InMemoryEventStorageEngine()
     }
 
+    /*
     @Bean
     fun exchange(): Exchange =
             ExchangeBuilder.fanoutExchange("TenantEvents").build()
@@ -50,10 +56,14 @@ class Configuration {
     fun tenantEvents(serializer: Serializer): SpringAMQPMessageSource =
             object : SpringAMQPMessageSource(DefaultAMQPMessageConverter(serializer)) {
                 @RabbitListener(queues = ["TenantEvents"])
-                override fun onMessage(message: Message?, channel: Channel?) {
+                override fun onMessage(message: Message, channel: Channel) {
                     super.onMessage(message, channel)
                 }
             }
+            */
+
+//        @Bean
+//    fun eventScheduler() : EventScheduler =
 }
 
 @Component

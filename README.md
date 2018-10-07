@@ -78,7 +78,13 @@ event received: TenantActivated(id=602224704)
 1. Implement at least one tenant projection
 1. `DONE` Implement API controller for tenants
 1. Implement another aggregate root (UserProfile)
-1. Implement saga (coordinate creation of a tenant and 2 users). Expose saga start and progress on the API.
+1. Implement KYC saga:
+    1. a new user starts sign-on process
+    1. user enters MSISDN
+    1. confirmation code is generated
+    1. SMS with confirmation code is sent
+    1. user presents confirmation code
+    1. a new user profile is created 
 1. Implement custom aggregate root repository for another aggregate (no event sourcing)
 1. Connect everything
     1. postgres
